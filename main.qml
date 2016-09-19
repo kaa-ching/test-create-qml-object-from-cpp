@@ -10,6 +10,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         id: myrect1
+        objectName: "myrect1"
         border.color: "black"
         width: 400
         height: 200
@@ -20,12 +21,7 @@ Item {
         }
 
         Text {
-            text: "We should get a smaller rounded rectange inside here..."
-        }
-
-        RRect {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
+            text: "We should get smaller BLUE and RED rounded rectangles inside..."
         }
 
     }
