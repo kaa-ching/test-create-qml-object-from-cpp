@@ -51,17 +51,30 @@ int main(int argc, char *argv[])
     //
     //  *** APPROACH 2
     //
-    QString myObjectDescription("import QtQuick 2.0; RRect { anchors.horizontalCenter: parent.horizontalCenter; anchors.verticalCenter: parent.verticalCenter; color: \"red\" }");
+    const char* myObjectDescription = "RRect { width: 300; height: 70; anchors.horizontalCenter: parent.horizontalCenter; anchors.verticalCenter: parent.verticalCenter; color: \"red\" }";
     QQmlContext myContext(myEnginePtr, myBlackRectPtr);
 
     QQmlComponent my2Component(myEnginePtr);
     dumpErrors("my2Component after construction", &my2Component);
-    my2Component.setData("RRect { width: 300; height: 70; anchors.horizontalCenter: parent.horizontalCenter; anchors.verticalCenter: parent.verticalCenter; color: \"red\" }",
-                          QUrl("qrc:/main.qml"));
+    // look: we can set all kinds of properties this way - even if they are nested like anchors.
+    my2Component.setData( myObjectDescription, QUrl("qrc:/main.qml"));
     dumpErrors("my2Component after setData", &my2Component);
     QQuickItem* my2ItemPtr = qobject_cast<QQuickItem*>(my2Component.create(&myContext));
     dumpErrors("my2Component after create()", &my2Component);
     my2ItemPtr->setParentItem(myBlackRectPtr);
+
+    //
+    // BONUS
+    //
+    QQuickItem* my3ItemPtr = qobject_cast<QQuickItem*>(my2Component.create(&myContext));
+    dumpErrors("my2Component after 2nd create()", &my2Component);
+    QQuickItem* myBlueRectPtr = view.rootObject()->findChild<QQuickItem*>("myrect2");
+    if (nullptr == myBlueRectPtr) {
+        printf("ERROR: no myrect1 found\n");
+        exit(-1);
+    }
+    my3ItemPtr->setParentItem(myBlueRectPtr);
+
 
     return app.exec();
 }

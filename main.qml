@@ -8,7 +8,7 @@ Item {
 
     Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.top: parent.top
         id: myrect1
         objectName: "myrect1"
         border.color: "black"
@@ -26,4 +26,10 @@ Item {
 
     }
 
+    GameView {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: myrect1.bottom
+        id: myrect2
+        objectName: "myrect2"
+    }
 }
